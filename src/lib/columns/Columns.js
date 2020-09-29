@@ -12,13 +12,13 @@ const passThroughPropTypes = {
   minUnit: PropTypes.string.isRequired,
   timeSteps: PropTypes.object.isRequired,
   height: PropTypes.number.isRequired,
-  verticalLineClassNamesForTime: PropTypes.func
+  verticalLineClassNamesForTime: PropTypes.func,
 }
 
 class Columns extends Component {
   static propTypes = {
     ...passThroughPropTypes,
-    getLeftOffsetFromDate: PropTypes.func.isRequired
+    getLeftOffsetFromDate: PropTypes.func.isRequired,
   }
 
   shouldComponentUpdate(nextProps) {
@@ -31,7 +31,8 @@ class Columns extends Component {
       nextProps.timeSteps === this.props.timeSteps &&
       nextProps.height === this.props.height &&
       nextProps.verticalLineClassNamesForTime ===
-        this.props.verticalLineClassNamesForTime
+        this.props.verticalLineClassNamesForTime &&
+      nextProps.showWorkingHours === this.props.showWorkingHours
     )
   }
 
@@ -44,7 +45,8 @@ class Columns extends Component {
       timeSteps,
       height,
       verticalLineClassNamesForTime,
-      getLeftOffsetFromDate
+      getLeftOffsetFromDate,
+      showWorkingHours,
     } = this.props
     const ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart)
 
@@ -78,18 +80,48 @@ class Columns extends Component {
 
         const left = getLeftOffsetFromDate(time.valueOf())
         const right = getLeftOffsetFromDate(nextTime.valueOf())
-        lines.push(
-          <div
-            key={`line-${time.valueOf()}`}
-            className={classNames}
-            style={{
-              pointerEvents: 'none',
-              transform: `translate3d(${left}px, 0, 0)`,
-              width: `${right - left}px`,
-              height: `${height}px`
-            }}
-          />
-        )
+
+        if (showWorkingHours) {
+          if (minUnit !== 'hour' || (minUnit === 'hour' && firstOfType))
+            lines.push(
+              <div
+                key={`line-${time.valueOf()}`}
+                className={classNames}
+                style={{
+                  pointerEvents: 'none',
+                  transform: `translate3d(${left}px, 0, 0)`,
+                  width: `${right - left}px`,
+                  height: `${height}px`,
+                }}
+              />
+            )
+          else if (minUnit === 'hour' && time.hours() % 3 === 0)
+            lines.push(
+              <div
+                key={`line-${time.valueOf()}`}
+                className={classNames}
+                style={{
+                  pointerEvents: 'none',
+                  transform: `translate3d(${left}px, 0, 0)`,
+                  width: `${right - left}px`,
+                  height: `${height}px`,
+                }}
+              />
+            )
+        } else {
+          lines.push(
+            <div
+              key={`line-${time.valueOf()}`}
+              className={classNames}
+              style={{
+                pointerEvents: 'none',
+                transform: `translate3d(${left}px, 0, 0)`,
+                width: `${right - left}px`,
+                height: `${height}px`,
+              }}
+            />
+          )
+        }
       }
     )
 
@@ -108,7 +140,7 @@ const ColumnsWrapper = ({ ...props }) => {
 }
 
 ColumnsWrapper.defaultProps = {
-  ...passThroughPropTypes
+  ...passThroughPropTypes,
 }
 
 export default ColumnsWrapper

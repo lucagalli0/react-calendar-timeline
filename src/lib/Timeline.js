@@ -44,6 +44,7 @@ export default class ReactCalendarTimeline extends Component {
     stickyHeader: PropTypes.bool,
     lineHeight: PropTypes.number,
     itemHeightRatio: PropTypes.number,
+    showWorkingHours: PropTypes.bool,
 
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
@@ -168,6 +169,7 @@ export default class ReactCalendarTimeline extends Component {
     stickyHeader: true,
     lineHeight: 30,
     itemHeightRatio: 0.65,
+    showWorkingHours: false,
 
     minZoom: 60 * 60 * 1000, // 1 hour
     maxZoom: 5 * 365.24 * 86400 * 1000, // 5 years
@@ -723,6 +725,7 @@ export default class ReactCalendarTimeline extends Component {
         timeSteps={timeSteps}
         height={height}
         verticalLineClassNamesForTime={this.props.verticalLineClassNamesForTime}
+        showWorkingHours={this.props.showWorkingHours}
       />
     )
   }
