@@ -565,8 +565,8 @@ export default class Item extends Component {
     const baseStyles = {
       position: 'absolute',
       boxSizing: 'border-box',
-      top: 0,
-      transform: `translate3d(${dimensions.left}px, ${dimensions.top}px, 0)`,
+      top: dimensions.top,
+      left: dimensions.left,
       width: `${dimensions.width}px`,
       height: `${dimensions.height}px`,
       lineHeight: `${dimensions.height}px`
