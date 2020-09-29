@@ -84,8 +84,7 @@ class Columns extends Component {
             className={classNames}
             style={{
               pointerEvents: 'none',
-              top: '0px',
-              left: `${left}px`,
+              transform: `translate3d(${left}px, 0, 0)`,
               width: `${right - left}px`,
               height: `${height}px`
             }}
