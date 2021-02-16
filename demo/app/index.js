@@ -48,6 +48,7 @@ class Menu extends Component {
             {key}
           </Link>
         ))}
+        <input type="number" value={this.props.lineHeight} onChange={this.props.handleChange} />
       </div>
     )
   }
@@ -56,15 +57,21 @@ class Menu extends Component {
 const MenuWithRouter = withRouter(Menu)
 
 class App extends Component {
+  state = {lineHeight: 30}
+  handleChange = (e) => this.setState({ lineHeight: e.target.value })
   render() {
     return (
       <Router>
         <div>
-          <MenuWithRouter />
+          <MenuWithRouter lineHeight={this.state.lineHeight} handleChange={this.handleChange} />
           <div className="demo-demo">
             <Route path="/" exact component={demos[Object.keys(demos)[0]]} />
             {Object.keys(demos).map(key => (
-              <Route key={key} path={`/${key}`} component={demos[key]} />
+              <Route key={key} path={`/${key}`} render={() => {
+                const Component = demos[key];
+                return <Component lineHeight={this.state.lineHeight} />
+              }
+              } />
             ))}
           </div>
         </div>

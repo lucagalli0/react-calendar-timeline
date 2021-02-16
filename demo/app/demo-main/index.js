@@ -34,6 +34,17 @@ var keys = {
   itemTimeEndKey: 'end'
 }
 
+const timeSteps = {
+  second: 0,
+  minute: 0,
+  hour: 3,
+  day: 1,
+  month: 1,
+  year: 1
+};
+
+const DAY = 1000 * 60 * 60 * 24;
+
 export default class App extends Component {
   constructor(props) {
     super(props)
@@ -158,6 +169,7 @@ export default class App extends Component {
         canMove
         canResize="right"
         canSelect
+        lineHeight={Number(this.props.lineHeight)}
         itemsSorted
         itemTouchSendsClick={false}
         stackItems
@@ -175,6 +187,10 @@ export default class App extends Component {
         onItemDoubleClick={this.handleItemDoubleClick}
         onTimeChange={this.handleTimeChange}
         moveResizeValidator={this.moveResizeValidator}
+        timeSteps={timeSteps}
+        minZoom={1.5 * DAY}
+        maxZoom={ 31 * DAY}
+        showWorkingHours
       >
         <TimelineMarkers>
           <TodayMarker />
