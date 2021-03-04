@@ -77,6 +77,9 @@ export default class ReactCalendarTimeline extends Component {
     onZoom: PropTypes.func,
     onItemDrag: PropTypes.func,
 
+    onItemMouseEnter: PropTypes.func,
+    onItemMouseLeave: PropTypes.func,
+
     moveResizeValidator: PropTypes.func,
 
     itemRenderer: PropTypes.func,
@@ -822,6 +825,8 @@ export default class ReactCalendarTimeline extends Component {
         itemDrop={this.dropItem}
         onItemDoubleClick={this.doubleClickItem}
         onItemContextMenu={this.contextMenuClickItem}
+        onItemMouseEnter={this.props.onItemMouseEnter}
+        onItemMouseLeave={this.props.onItemMouseLeave}
         itemResizing={this.resizingItem}
         itemResized={this.resizedItem}
         itemRenderer={this.props.itemRenderer}

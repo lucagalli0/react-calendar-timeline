@@ -57,6 +57,9 @@ export default class Item extends Component {
     moveResizeValidator: PropTypes.func,
     onItemDoubleClick: PropTypes.func,
 
+    onItemMouseEnter: PropTypes.func,
+    onItemMouseLeave: PropTypes.func,
+
     scrollRef: PropTypes.object
   }
 
@@ -425,7 +428,7 @@ export default class Item extends Component {
     const willBeAbleToResizeRight =
       this.props.selected && this.canResizeRight(this.props)
 
-    if(!!this.item){
+    if(this.item){
       if (this.props.selected && !interactMounted) {
         this.mountInteract()
         interactMounted = true
@@ -472,6 +475,18 @@ export default class Item extends Component {
     if (!this.state.interactMounted && this.startedClicking) {
       this.startedClicking = false
       this.actualClick(e, 'click')
+    }
+  }
+
+  handleMouseEnter = e => {
+    if (this.props.onItemMouseEnter) {
+      this.props.onItemMouseEnter(this.itemId, e)
+    }
+  }
+
+  handleMouseLeave = e => {
+    if (this.props.onItemMouseLeave) {
+      this.props.onItemMouseLeave(this.itemId, e)
     }
   }
 
@@ -527,6 +542,8 @@ export default class Item extends Component {
       className: classNames + ` ${props.className ? props.className : ''}`,
       onMouseDown: composeEvents(this.onMouseDown, props.onMouseDown),
       onMouseUp: composeEvents(this.onMouseUp, props.onMouseUp),
+      onMouseEnter: this.handleMouseEnter,
+      onMouseLeave: this.handleMouseLeave,
       onTouchStart: composeEvents(this.onTouchStart, props.onTouchStart),
       onTouchEnd: composeEvents(this.onTouchEnd, props.onTouchEnd),
       onDoubleClick: composeEvents(this.handleDoubleClick, props.onDoubleClick),

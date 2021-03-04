@@ -48,6 +48,9 @@ export default class Items extends Component {
     onItemDoubleClick: PropTypes.func,
     onItemContextMenu: PropTypes.func,
 
+    onItemMouseEnter: PropTypes.func,
+    onItemMouseLeave: PropTypes.func,
+
     itemRenderer: PropTypes.func,
     selected: PropTypes.array,
 
@@ -158,6 +161,8 @@ export default class Items extends Component {
               onDrag={this.props.itemDrag}
               onDrop={this.props.itemDrop}
               onItemDoubleClick={this.props.onItemDoubleClick}
+              onItemMouseEnter={this.props.onItemMouseEnter}
+              onItemMouseLeave={this.props.onItemMouseLeave}
               onContextMenu={this.props.onItemContextMenu}
               onSelect={this.props.itemSelect}
               itemRenderer={this.props.itemRenderer}
