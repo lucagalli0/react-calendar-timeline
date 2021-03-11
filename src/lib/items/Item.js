@@ -480,13 +480,13 @@ export default class Item extends Component {
 
   handleMouseEnter = e => {
     if (this.props.onItemMouseEnter) {
-      this.props.onItemMouseEnter(this.itemId, e)
+      this.props.onItemMouseEnter(this.props.item, e)
     }
   }
 
   handleMouseLeave = e => {
     if (this.props.onItemMouseLeave) {
-      this.props.onItemMouseLeave(this.itemId, e)
+      this.props.onItemMouseLeave(this.props.item, e)
     }
   }
 
